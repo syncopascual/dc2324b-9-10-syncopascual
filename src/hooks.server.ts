@@ -20,3 +20,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	return resolve(event);
 };
+
+export function handleError({ event, error }) {
+	console.error(error.stack);
+
+	return {
+		message: 'Kaboom!'
+	}
+}

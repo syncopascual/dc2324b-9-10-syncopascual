@@ -9,10 +9,10 @@ let attempt_count = 0;
 export function attemptCounter(match) {
 	/* Put your code here. DO NOT REMOVE THE return */
 	if (!match && attempt_count >= 5) {
-		return err(new Error("Too many incorrect login attempts!"))
+		return new Error("Too many incorrect login attempts!")
 	}
 	else if (!match) {
-		throw err(new Error("Incorrect password!"))
+		throw new Error("Incorrect password!")
 	}
 	return;
 }

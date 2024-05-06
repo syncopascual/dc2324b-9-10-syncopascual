@@ -26,5 +26,5 @@ export function handleError({ event, error }) {
 
 	return {
 		message: 'Kaboom!'
-	}
+	};
 }

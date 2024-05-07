@@ -3,20 +3,20 @@ import { log } from 'debug';
 import bcrypt from 'bcrypt';
 import { createUser, getUsers, setToken } from '$lib/db';
 import { seed_user } from './seed';
+import { error } from '@sveltejs/kit';
 
-let attempt_count = 0;
+var attempt_count = 0;
 
 export function attemptCounter(match) {
 	/* Put your code here. DO NOT REMOVE THE return */
-	if (!match && attempt_count >= 4) {
+	if (match == false) {
 		attempt_count += 1;
-		return new Error("Too many incorrect login attempts!")
 	}
-	else if (!match) {
-		attempt_count += 1;
-		throw new Error("Incorrect password!");
+	if (attempt_count > 4) {
+		attempt_count = 0;
+		throw new Error("Too many failed attempts!");
 	}
-	return;
+	return err(new Error("Incorrect login credentials!"))
 }
 
 export const cookie: AuthAdapter = {

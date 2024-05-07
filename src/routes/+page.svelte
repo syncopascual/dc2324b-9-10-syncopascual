@@ -24,8 +24,8 @@
 	<p class="flex items-center gap-4 mt-12">
 		{#if $session?.user}
 			<a href="/dashboard" class="btn btn-primary">Dashboard</a>
-			<a href="/data" class="btn btn-secondary">Data</a>
-			<a href="/logout" class="btn">Logout</a>
+			<a href="/data" class="btn btn-secondary" data-sveltekit-preload-data>Data</a>
+			<a href="/logout" class="btn" data-sveltekit-reload>Logout</a>
 		{:else}
 			<a href="/signup" class="btn btn-primary">Sign Up</a>
 			<a href="/login" class="btn">Log In</a>

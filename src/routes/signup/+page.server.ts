@@ -2,12 +2,12 @@ import { auth } from '$lib/auth';
 import { AUTH_TOKEN_EXPIRY_SECONDS } from '$lib/constants.server';
 import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { error } from '@sveltejs/kit'
+import { getUser } from '$lib/db';
 
 export function _usernameRequired(username) {
 	/* Put your code here. DO NOT REMOVE THE return */
 	if (!username) {
-		return error(422, "No username?")
+		return fail(422, { error: "Username is required!" })
 	}
 	return;
 }
@@ -15,7 +15,7 @@ export function _usernameRequired(username) {
 export function _passwordRequired(password) {
 	/* Put your code here. DO NOT REMOVE THE return */
 	if (!password) {
-		return error(422, "No password?")
+		return fail(422, { error: "Password is required!" })
 	}
 	return;
 }
@@ -23,14 +23,14 @@ export function _passwordRequired(password) {
 export function _passwordLength(password) {
 	/* Put your code here. DO NOT REMOVE THE return */
 	if (String(password).length < 8) {
-		return error(422, "Password must be at least 8 characters long!")
+		return fail(422, { error: "Password must be at least 8 characters long!" })
 	}
 	return;
 }
 
 export function _passwordMatch(password, password_confirm) {
 	if (password != password_confirm) {
-		return error(422, "Password and password confirmation must match!")
+		return fail(422, { error: "Password and password confirmation must match!" })
 	}
 	return;
 }
@@ -38,13 +38,16 @@ export function _passwordMatch(password, password_confirm) {
 export function _passwordComplexity(containsUppercase, containsNumber, containsSpecialCharacter) {
 	/* Put your code here. DO NOT REMOVE THE return */
 	if (!(containsUppercase && containsNumber && containsSpecialCharacter)) {
-		return error(422, "Password must have at least one uppercase letter, one number, and one special character!")
+		return fail(422, { error: "Password must have at least one uppercase letter, one number, and one special character!" })
 	}
 	return;
 }
 
 export async function _userExists(username) {
 	/* Put your code here. DO NOT REMOVE THE return */
+	if (!getUser(username)) {
+		return fail(422, { error: "Username is taken!" })
+	}
 	return;
 }
 

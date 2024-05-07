@@ -46,7 +46,7 @@ export function _passwordComplexity(containsUppercase, containsNumber, containsS
 export async function _userExists(username) {
 	/* Put your code here. DO NOT REMOVE THE return */
 	let test_user = await getUser(username)
-	if (!test_user) {
+	if (getUser(username) != undefined) {
 		return fail(422, { error: "Username is taken!" })
 	}
 	return;
